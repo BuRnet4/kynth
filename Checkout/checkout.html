@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Checkout</title>
+    <link rel="stylesheet" href="/checkout/checkout.css">
+</head>
+<body>
+    <nav>
+        <div class="logo1">
+            <div>
+                <img class="logohead" src="images/burnet2_logo.png" alt="Logo">
+            </div>
+            <div>
+                <a href="/home/home.html">Buy and Repair.Net</a>
+                <p>BUY SMART, REPAIR BETTER</p>
+            </div>
+        </div>
+        <ul class="nav-links">
+            <li><a href="/home/home.html">Home</a></li>
+            <li><a href="/about/about.html">About Us</a></li>
+            <li><a href="/services/services.html">Services</a></li>
+            <li><a href="/contact/contact.html">Contact Us</a></li>
+            <li><a href="/products/products.html">Products</a></li>
+        </ul>
+    </nav>
+
+    <h2>Checkout</h2>
+    <div id="checkout-items-container">
+        <!-- Items will be displayed here -->
+    </div>
+    <div id="checkout-total"></div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const cartData = JSON.parse(localStorage.getItem("cart")) || [];
+            console.log("Cart Data from localStorage:", cartData); // Debugging line
+
+            const itemsContainer = document.getElementById("checkout-items-container");
+            const totalContainer = document.getElementById("checkout-total");
+            let totalAmount = 0;
+
+            if (cartData.length === 0) {
+                itemsContainer.innerHTML = "<p>Your cart is empty.</p>";
+            } else {
+                cartData.forEach((item) => {
+                    console.log("Item:", item); // Debugging line
+                    const itemElement = document.createElement("div");
+                    itemElement.textContent = `${item.title} - ₱${item.price.toFixed(2)} x ${item.quantity} = ₱${(item.price * item.quantity).toFixed(2)}`;
+                    itemsContainer.appendChild(itemElement);
+                    totalAmount += item.price * item.quantity;
+                });
+                totalContainer.textContent = `Total: ₱${totalAmount.toFixed(2)}`;
+            }
+        });
+    </script>
+</body>
+</html>
